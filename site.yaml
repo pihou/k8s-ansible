@@ -1,39 +1,45 @@
 
-- name: local
-  hosts: 127.0.0.1
-  connection: local
-  tasks:
-  - shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/k8s_rsa -q -N ""
-    args:
-      creates: ~/.ssh/k8s_rsa
-
-- name: public
-  hosts: all
+#- name: local
+#  hosts: 127.0.0.1
+#  connection: local
+#  tasks:
+#  - shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/k8s_rsa -q -N ""
+#    args:
+#      creates: ~/.ssh/k8s_rsa
+#
+- name: prepare on main node
+  hosts: main
   remote_user: root
   roles:
-    - public 
+    - main 
 
-- name: k8s-master
-  hosts: k8s-master
-  remote_user: root
-  roles:
-    - k8s-master
-
-- name: etcd-node
-  hosts: etcd-node
-  remote_user: root
-  roles:
-    - etcd-node
-
-- name: k8s-master
-  hosts: k8s-master
-  remote_user: root
-  roles:
-    - k8s-master
-
-- name: k8s-node
-  hosts: k8s-node
-  remote_user: root
-  roles:
-    - k8s-node
+#- name: public
+#  hosts: all
+#  remote_user: root
+#  roles:
+#    - public 
+#
+#- name: k8s-master
+#  hosts: k8s-master
+#  remote_user: root
+#  roles:
+#    - k8s-master
+#
+#- name: etcd-node
+#  hosts: etcd-node
+#  remote_user: root
+#  roles:
+#    - etcd-node
+#
+#- name: k8s-master
+#  hosts: k8s-master
+#  remote_user: root
+#  roles:
+#    - k8s-master
+#
+#- name: k8s-node
+#  hosts: k8s-node
+#  remote_user: root
+#  roles:
+#    - k8s-node
 

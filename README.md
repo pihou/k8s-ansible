@@ -5,3 +5,6 @@
 3. 仅支持linux 或 mac os 作为执行主机
 4. 需修改host文件,填入阿里云各主机外网ip(绑定弹性网卡)
 
+### 配置参考
+[k8s](!https://jimmysong.io/kubernetes-handbook/)
+

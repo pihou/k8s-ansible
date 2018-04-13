@@ -9,6 +9,9 @@
   file: path="{{item}}" state=directory
   with_items:
   - /root/software
+  - /etc/kubernetes
+  - /etc/kubernetes/ssl
+
 
 - name: add authorized key
   authorized_key:
@@ -16,10 +19,20 @@
     state: present
     key: "{{ lookup('file', '~/.ssh/k8s_rsa.pub') }}"
 
-- name: get public file
+- name: get k8s server bin
   synchronize: src="{{item.src}}" dest="{{item.dest}}"
   delegate_to: "{{groups['main'][0]}}"
   with_items:
     - { src: "/root/software/kubernetes-server-linux-amd64.tar.gz", dest: "/root/software/"}
   when: inventory_hostname != groups["main"][0]
+
+- name: put k8s server bin
+  shell: |
+    cd /root/software
+    tar -xzvf kubernetes-server-linux-amd64.tar.gz
+    cd kubernetes
+    tar -xzvf  kubernetes-src.tar.gz
+    cp -r server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl,kube-proxy,kubelet} /usr/local/bin/
+  args:
+    executable: /bin/bash
 

@@ -1,28 +1,12 @@
 
-#- name: create k8s server bin
-#  shell: |
-#    cd /root/software
-#    tar -xzvf kubernetes-server-linux-amd64.tar.gz
-#    cd kubernetes
-#    tar -xzvf  kubernetes-src.tar.gz
-#    cp -r server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl,kube-proxy,kubelet} /usr/local/bin/
-#  args:
-#    executable: /bin/bash
-
-- name: create directory
-  file: path="{{item}}" state=directory
-  with_items:
-  - /etc/kubernetes
-
-- name: get public file
+- name: get kubeconfig file
   synchronize: src="{{item.src}}" dest="{{item.dest}}"
   delegate_to: "{{groups['main'][0]}}"
   with_items:
     - { src: "/etc/kubernetes/bootstrap.kubeconfig", dest: "/etc/kubernetes/bootstrap.kubeconfig"}
     - { src: "/etc/kubernetes/kube-proxy.kubeconfig", dest: "/etc/kubernetes/kube-proxy.kubeconfig"}
-  when: inventory_hostname != groups["main"][0]
 
-- name: install flannel
+- name: install flannel conntrack
   yum: 
     name: "{{item}}"
   with_items:
@@ -46,7 +30,7 @@
     - {src: "config.j2", dest: "/etc/kubernetes/config"}
     - {src: "proxy.j2", dest: "/etc/kubernetes/proxy"}
 
-- name: create ssl directory
+- name: create kubelet directory
   file: path="{{item}}" state=directory
   with_items:
     - /var/lib/kubelet

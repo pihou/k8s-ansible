@@ -4,4 +4,4 @@
 # default config should be adequate
 
 # Add your own!
-KUBE_PROXY_ARGS="--bind-address=192.168.88.8{{host_index}} --hostname-override=192.168.88.8{{host_index}} --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr=10.254.0.0/16"
+KUBE_PROXY_ARGS="--bind-address={{ansible_default_ipv4.address}} --hostname-override={{ansible_default_ipv4.address}} --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig --cluster-cidr=10.254.0.0/16"

@@ -26,17 +26,17 @@
 #  remote_user: root
 #  roles:
 #    - public 
-#
 
-- name: k8s-master
-  hosts: k8s-master
-  remote_user: root
-  roles:
-    - k8s-master
 
-#- name: k8s-node
-#  hosts: k8s-node
+#- name: k8s-master
+#  hosts: k8s-master
 #  remote_user: root
 #  roles:
-#    - k8s-node
+#    - k8s-master
+
+- name: k8s-node
+  hosts: k8s-node
+  remote_user: root
+  roles:
+    - k8s-node
 

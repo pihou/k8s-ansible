@@ -12,7 +12,7 @@ KUBELET_HOSTNAME="--hostname-override={{ansible_default_ipv4.address}}"
 #
 ## location of the api-server
 ## COMMENT THIS ON KUBERNETES 1.8+
-KUBELET_API_SERVER="--api-servers=http://{{api_server}}:8080"
+#KUBELET_API_SERVER="--api-servers=http://{{api_server}}:8080"
 #
 ## pod infrastructure container
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=jimmysong/pause-amd64:3.0"

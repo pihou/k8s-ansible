@@ -5,9 +5,21 @@
   with_items:
   - rsync
 
+- name: create common directory
+  file: path="{{item}}" state=directory
+  with_items:
+  - /root/software
+
 - name: add authorized key
   authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', '~/.ssh/k8s_rsa.pub') }}"
+
+- name: get public file
+  synchronize: src="{{item.src}}" dest="{{item.dest}}"
+  delegate_to: "{{groups['main'][0]}}"
+  with_items:
+    - { src: "/root/software/kubernetes-server-linux-amd64.tar.gz", dest: "/root/software/"}
+  when: inventory_name != groups["main"][0]
 

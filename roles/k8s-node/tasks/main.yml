@@ -1,138 +1,49 @@
----
-# This playbook will install mysql and create db user and give permissions.
-- name: copy ssl file
-  become: true
-  copy: 
-    src: "{{item}}"
-    dest: /etc/kubernetes/ssl/
-  with_fileglob:
-    - ~/space_work/k8s/ssl/*.pem
 
-#- name: unarchive kubernetes
-#  unarchive:
-#    src: /vagrant/kubernetes-server-linux-amd64.tar.gz
-#    dest: /home/vagrant
-#    remote_src: yes
-
-- name    : get kube binary list
-  shell   : ls /home/vagrant/kubernetes/server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl,kube-proxy,kubelet}
-  register: kube_bin
-
-- name: copy kube binary
-  become: true
-  copy:
-    src: "{{item}}"
-    dest: /usr/local/bin
-    remote_src: yes
-    mode: 0774
-  with_items: "{{kube_bin.stdout_lines}}"
-
-- name: copy kubeconfig file
-  become: true
-  copy: 
-    src: "{{item}}"
-    dest: /etc/kubernetes/
-  with_items:
-    - ~/space_work/k8s/kube-proxy.kubeconfig
-    - ~/space_work/k8s/bootstrap.kubeconfig
-    - ~/space_work/k8s/token.csv
-
-- name: install ectd
-  become: true
-  yum:
-    name: "etcd"
-
-- name: copy ectd config
-  become: true
-  template: src=etcd.conf.j2 dest=/etc/etcd/etcd.conf
-  vars:
-    host_index: "{{ansible_hostname|last}}"
-
-- name: copy ectd service config
-  become: true
-  copy:
-    src: ~/space_work/k8s/etcd.service
-    dest: /usr/lib/systemd/system/
-
-- name: systemd start etcd
-  become: true
-  systemd:
-    daemon_reload: yes
-    enabled: true
-    state: started
-    name: etcd
-
-- name: install docker
-  become: true
-  yum:
-    name: "docker"
+- name: create k8s server bin
+  shell: |
+    cd /root/software
+    tar -xzvf kubernetes-server-linux-amd64.tar.gz
+    cd kubernetes
+    tar -xzvf  kubernetes-src.tar.gz
+    cp -r server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl,kube-proxy,kubelet} /usr/local/bin/
+  args:
+    executable: /bin/bash
 
 - name: install flannel
-  become: true
-  yum:
-    name: "flannel"
+  yum: 
+    name: "{{item}}"
+  with_items:
+  - flannel
+  - conntrack-tools
 
-- name: copy flannel configuration file
-  become: true
+- name: copy config file
   copy: 
     src: "{{item.src}}"
-    dest: "{{item.dest}}" 
+    dest: "{{item.dest}}"
   with_items:
-    - {src: '~/space_work/k8s/flanneld.service', dest: '/usr/lib/systemd/system'}
-    - {src: '~/space_work/k8s/flanneld', dest: '/etc/sysconfig'}
+    - {src: "flanneld.service", dest: "/usr/lib/systemd/system/"}
+    - {src: "kubelet.service", dest: "/usr/lib/systemd/system/"}
+    - {src: "kube-proxy.service", dest: "/usr/lib/systemd/system/"}
 
-- name: systemd start flannel
-  become: true
+- name: generate config by template
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {src: "flanneld.j2", dest: "/etc/sysconfig/flanneld"}
+    - {src: "kubelet.j2", dest: "/etc/kubernetes/kubelet"}
+    - {src: "config.j2", dest: "/etc/kubernetes/config"}
+    - {src: "proxy.j2", dest: "/etc/kubernetes/proxy"}
+
+- name: create ssl directory
+  file: path="{{item}}" state=directory
+  with_items:
+    - /var/lib/kubelet
+
+- name: start service
   systemd:
     daemon_reload: yes
     enabled: true
-    state: started
-    name: flanneld
+    state: restarted
+    name: "{{item}}"
+  with_items: ["flanneld", "kubelet", "kube-proxy"]
 
-- name: copy  kubelet service file
-  become: true
-  copy:
-    src: ../kubelet.service
-    dest: /usr/lib/systemd/system/kubelet.service
-
-- name: copy kubelet configuration file
-  become: true
-  template:
-    src: kubelet.j2
-    dest: /etc/kubernetes/kubelet
-  vars:
-    host_index: "{{ansible_hostname|last}}"
-
-- name: start kubelet
-  become: true
-  systemd:
-    daemon_reload: yes
-    enabled: true
-    state: started
-    name: kubelet
-
-- name: install conntrack
-  become: true
-  yum:
-    name: "conntrack-tools"
-
-- name: copy kube-proxy file
-  become: true
-  copy: 
-    src: ../kube-proxy.service
-    dest: /usr/lib/systemd/system/
-
-- name: copy kube-proxy config
-  become: true
-  template: src=proxy.j2 dest=/etc/kubernetes/proxy
-  vars:
-    host_index: "{{ansible_hostname|last}}"
-
-- name: start kube-proxy
-  become: true
-  systemd:
-    daemon_reload: yes
-    enabled: true
-    state: started
-    name: kube-proxy
 

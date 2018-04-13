@@ -114,6 +114,9 @@
       --kubeconfig=kube-proxy.kubeconfig
     kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 
+    kubectl create clusterrolebinding kubelet-bootstrap \
+      --clusterrole=system:node-bootstrapper \
+      --user=kubelet-bootstrap
   args:
     executable: /bin/bash
 

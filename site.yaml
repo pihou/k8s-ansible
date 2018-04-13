@@ -7,11 +7,19 @@
 #    args:
 #      creates: ~/.ssh/k8s_rsa
 #
-- name: prepare on main node
-  hosts: main
-  remote_user: root
-  roles:
-    - main 
+#- name: prepare on main node
+#  hosts: main
+#  remote_user: root
+#  roles:
+#    - main 
+#
+
+#- name: etcd-node
+#  hosts: etcd-node
+#  remote_user: root
+#  roles:
+#    - etcd-node
+
 
 #- name: public
 #  hosts: all
@@ -19,24 +27,13 @@
 #  roles:
 #    - public 
 #
-#- name: k8s-master
-#  hosts: k8s-master
-#  remote_user: root
-#  roles:
-#    - k8s-master
-#
-#- name: etcd-node
-#  hosts: etcd-node
-#  remote_user: root
-#  roles:
-#    - etcd-node
-#
-#- name: k8s-master
-#  hosts: k8s-master
-#  remote_user: root
-#  roles:
-#    - k8s-master
-#
+
+- name: k8s-master
+  hosts: k8s-master
+  remote_user: root
+  roles:
+    - k8s-master
+
 #- name: k8s-node
 #  hosts: k8s-node
 #  remote_user: root

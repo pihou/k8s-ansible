@@ -1,0 +1,41 @@
+
+#- name: create k8s server bin
+#  shell: |
+#    cd /root/software
+#    tar -xzvf kubernetes-server-linux-amd64.tar.gz
+#    cd kubernetes
+#    tar -xzvf  kubernetes-src.tar.gz
+#    cp -r server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler,kubectl,kube-proxy,kubelet} /usr/local/bin/
+#  args:
+#    executable: /bin/bash
+#
+
+#- name: copy config file
+#  copy: 
+#    src: "{{item.src}}"
+#    dest: "{{item.dest}}"
+#  with_items:
+#    - {src: "kube-apiserver.service", dest: "/usr/lib/systemd/system/"}
+#    - {src: "kube-controller-manager.service", dest: "/usr/lib/systemd/system/"}
+#    - {src: "kube-scheduler.service", dest: "/usr/lib/systemd/system/"}
+#    - {src: "controller-manager", dest: "/etc/kubernetes/"}
+#    - {src: "scheduler", dest: "/etc/kubernetes/"}
+
+- name: generate config by template
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {src: "config.j2", dest: "/etc/kubernetes/config"}
+    - {src: "apiserver.j2", dest: "/etc/kubernetes/apiserver"}
+    - {src: "etcd_network.sh.j2", dest: "/root/etcd_network.sh"}
+
+#- name: start service
+#  systemd:
+#    daemon_reload: yes
+#    enabled: true
+#    state: restarted
+#    name: "{{item}}"
+#  with_items: ["kube-apiserver", "kube-controller-manager", "kube-scheduler"]
+
+- name: create etcd network data
+  command: sh /root/etcd_network.sh
+

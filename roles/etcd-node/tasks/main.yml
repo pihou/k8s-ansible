@@ -28,6 +28,6 @@
   systemd:
     daemon_reload: yes
     enabled: true
-    state: started
+    state: restarted
     name: etcd
 

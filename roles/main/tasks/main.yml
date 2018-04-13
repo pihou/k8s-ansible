@@ -47,6 +47,7 @@
   copy:
     src: "{{item.src}}"
     dest: "{{item.dest}}"
+    mode: 0600
   with_items:
   - {src: "~/.ssh/k8s_rsa", dest: "~/.ssh/id_rsa"}
   - {src: "~/.ssh/k8s_rsa.pub", dest: "~/.ssh/id_rsa.pub"}

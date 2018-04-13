@@ -25,6 +25,12 @@
     name: "{{item}}"
   with_items: ["kube-apiserver", "kube-controller-manager", "kube-scheduler"]
 
+- name: create kubectl kubelet kube-proxy kubeconfig
+  shell: |
+    kubectl create clusterrolebinding kubelet-bootstrap \
+        --clusterrole=system:node-bootstrapper \
+        --user=kubelet-bootstrap
+
 - name: create etcd network data
   command: sh /root/etcd_network.sh
   when: inventory_hostname == groups["main"][0]

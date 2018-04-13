@@ -20,12 +20,19 @@
     key: "{{ lookup('file', '~/.ssh/k8s_rsa.pub') }}"
 
 - name: get k8s server bin
-  get_url: 
-    url: "{{item.url}}"
-    dest: "{{item.dest}}" 
+  synchronize: src="{{item.src}}" dest="{{item.dest}}"
+  delegate_to: "{{groups['main'][0]}}"
   with_items:
-    - {url: 'http://longban-software.oss-cn-shenzhen.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
+    - { src: "/root/software/kubernetes-server-linux-amd64.tar.gz", dest: "/root/software/"}
   when: inventory_hostname != groups["main"][0]
+
+#- name: get k8s server bin
+#  get_url: 
+#    url: "{{item.url}}"
+#    dest: "{{item.dest}}" 
+#  with_items:
+#    - {url: 'http://longban-software.oss-cn-shenzhen.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
+#  when: inventory_hostname != groups["main"][0]
 
 - name: put k8s server bin
   shell: |

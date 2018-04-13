@@ -12,6 +12,7 @@
   with_items:
   - flannel
   - conntrack-tools
+  - docker
 
 - name: copy config file
   copy: 
@@ -41,15 +42,16 @@
     enabled: true
     state: restarted
     name: "{{item}}"
-  with_items: ["flanneld", "kubelet", "kube-proxy"]
+  with_items: ["flanneld", "kubelet", "kube-proxy", "docker"]
 
-- name: create k8s server bin
-  shell: |
-    sed -i 's/\[Service\]/[Service]\nEnvironmentFile=-\/run\/flannel\/docker/' /usr/lib/systemd/system/docker.service
-  args:
-    executable: /bin/bash
+- name: modify docker configuration
+  replace:
+    path: /usr/lib/systemd/system/docker.service
+    regexp: '\[Service\]'
+    replace: '[Service]\nEnvironmentFile=-/run/flannel/docker'
+    backup: yes
 
-- name: start docker
+- name: restart docker
   systemd:
     daemon_reload: yes
     enabled: true

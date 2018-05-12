@@ -8,3 +8,6 @@
 ### 配置参考
 [k8s](https://jimmysong.io/kubernetes-handbook/)
 
+### 安全问题,详情请查看k8s官方手册
+1. api-server 应关闭8080 insecure port 非回环ip地址绑定
+2. kubelet 应开启api接口访问权限认证，以及关闭 insecure port

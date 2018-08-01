@@ -18,16 +18,19 @@ KUBELET_HOSTNAME="--hostname-override={{ansible_default_ipv4.address}}"
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry-vpc.cn-shenzhen.aliyuncs.com/pause-amd64:3.0"
 #
 ## Add your own!
-KUBELET_ARGS="--cgroup-driver=systemd \
+KUBELET_ARGS="--read-only-port=0 \
+--anonymous-auth=false \
+--authentication-token-webhook \
+--authentication-mode=Webhook \
+--client-ca-file=/etc/kubernetes/ssl/ca.pem \
+--kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
 --cluster-dns=10.254.0.2 \
 --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
---kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
---require-kubeconfig \
 --cert-dir=/etc/kubernetes/ssl \
 --cluster-domain=cluster.local \
---hairpin-mode \
-promiscuous-bridge \
---serialize-image-pulls=false 
---runtime-cgroups=/systemd/system.slice 
+--hairpin-mode=promiscuous-bridge \
+--serialize-image-pulls=false \
+--cgroup-driver=systemd \
+--runtime-cgroups=/systemd/system.slice \
 --kubelet-cgroups=/systemd/system.slice"
 

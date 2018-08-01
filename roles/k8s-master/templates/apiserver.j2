@@ -5,7 +5,7 @@
 ##
 #
 ## The address on the local server to listen to.
-KUBE_API_ADDRESS="--advertise-address={{ansible_default_ipv4.address}} --bind-address={{ansible_default_ipv4.address}} --insecure-bind-address={{ansible_default_ipv4.address}}"
+KUBE_API_ADDRESS="--advertise-address={{ansible_default_ipv4.address}} --bind-address={{ansible_default_ipv4.address}} --insecure-bind-address=127.0.0.1"
 #
 ## The port on the local server to listen on.
 #KUBE_API_PORT="--port=8080"
@@ -27,8 +27,10 @@ KUBE_ADMISSION_CONTROL="--admission-control=ServiceAccount,NamespaceLifecycle,Na
 #
 ## Add your own!
 KUBE_API_ARGS="--authorization-mode=Node,RBAC \
---runtime-config=rbac.authorization.k8s.io/v1beta1\
+--runtime-config=rbac.authorization.k8s.io/v1beta1 \
 --kubelet-https=true \
+--kubelet-client-certificate=/etc/kubernetes/ssl/admin.pem \
+--kubelet-client-key=/etc/kubernetes/ssl/admin-key.pem \
 --enable-bootstrap-token-auth \
 --token-auth-file=/etc/kubernetes/token.csv \
 --service-node-port-range=30000-32767 \
@@ -39,11 +41,34 @@ KUBE_API_ARGS="--authorization-mode=Node,RBAC \
 --etcd-cafile=/etc/kubernetes/ssl/ca.pem \
 --etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem \
 --etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem \
---enable-swagger-ui=true \
---apiserver-count=3 \
+--apiserver-count=1 \
 --audit-log-maxage=30 \
 --audit-log-maxbackup=3 \
 --audit-log-maxsize=100 \
 --audit-log-path=/var/lib/audit.log \
 --event-ttl=1h"
 
+#--audit-webhook-config-file=/etc/kubernetes/audit-webhook-kubeconfig \
+#--audit-policy-file=/etc/kubernetes/audit-policy.yaml"
+#
+#webhook-kubeconfig
+#apiVersion: v1
+#clusters:
+#- cluster:
+#    server: http://10.254.228.130:5959
+#  name: logstash
+#contexts:
+#- context:
+#    cluster: logstash
+#    user: ""
+#  name: default-context
+#current-context: default-context
+#kind: Config
+#preferences: {}
+#users: []
+#
+#audit-policy.yaml
+#apiVersion: audit.k8s.io/v1beta1
+#kind: Policy
+#rules:
+#- level: Request

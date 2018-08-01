@@ -4,6 +4,7 @@
     name: "{{item}}"
   with_items:
   - rsync
+  - docker
 
 - name: create common directory
   file: path="{{item}}" state=directory

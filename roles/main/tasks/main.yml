@@ -8,7 +8,7 @@
     - {url: 'https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64', dest: '/usr/local/bin/cfssljson'}
     - {url: 'https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64', dest: '/usr/local/bin/cfssl-certinfo'}
 
-- name: creates ssl directory
+- name: creates common directory
   file: path="{{item}}" state=directory
   with_items:
     - /root/ssl
@@ -43,7 +43,7 @@
   args:
     executable: /bin/bash
 
-- name: copy ssh private key
+- name: copy local ssh private key
   copy:
     src: "{{item.src}}"
     dest: "{{item.dest}}"
@@ -57,8 +57,8 @@
     url: "{{item.url}}"
     dest: "{{item.dest}}" 
   with_items:
-    - {url: 'https://longban-software.oss-cn-shenzhen.aliyuncs.com/kubernetes-client-linux-amd64.tar.gz', dest: '/root/software/'}
-    - {url: 'http://longban-software.oss-cn-shenzhen.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
+    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-client-linux-amd64.tar.gz', dest: '/root/software/'}
+    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
 
 - name: create kubectl kubelet kube-proxy kubeconfig
   shell: |

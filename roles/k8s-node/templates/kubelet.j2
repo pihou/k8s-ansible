@@ -15,8 +15,19 @@ KUBELET_HOSTNAME="--hostname-override={{ansible_default_ipv4.address}}"
 #KUBELET_API_SERVER="--api-servers=http://{{api_server}}:8080"
 #
 ## pod infrastructure container
-KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=jimmysong/pause-amd64:3.0"
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry-vpc.cn-shenzhen.aliyuncs.com/pause-amd64:3.0"
 #
 ## Add your own!
-KUBELET_ARGS="--cgroup-driver=systemd --cluster-dns=10.254.0.2 --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --require-kubeconfig --cert-dir=/etc/kubernetes/ssl --cluster-domain=cluster.local --hairpin-mode promiscuous-bridge --serialize-image-pulls=false --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice"
+KUBELET_ARGS="--cgroup-driver=systemd \
+--cluster-dns=10.254.0.2 \
+--bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
+--kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
+--require-kubeconfig \
+--cert-dir=/etc/kubernetes/ssl \
+--cluster-domain=cluster.local \
+--hairpin-mode \
+promiscuous-bridge \
+--serialize-image-pulls=false 
+--runtime-cgroups=/systemd/system.slice 
+--kubelet-cgroups=/systemd/system.slice"
 

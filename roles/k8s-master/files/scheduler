@@ -4,4 +4,7 @@
 # default config should be adequate
 
 # Add your own!
-KUBE_SCHEDULER_ARGS="--leader-elect=true --address=127.0.0.1"
+KUBE_MASTER="--master=http://127.0.0.1:8080"
+KUBE_SCHEDULER_ARGS="--leader-elect=true \
+--bind-address=127.0.0.1 \
+--port=10251"

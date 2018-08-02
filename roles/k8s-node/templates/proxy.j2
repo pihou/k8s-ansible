@@ -8,3 +8,6 @@ KUBE_PROXY_ARGS="--bind-address={{ansible_default_ipv4.address}} \
 --hostname-override={{ansible_default_ipv4.address}} \
 --kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig \
 --cluster-cidr=10.254.0.0/16"
+
+# How the controller-manager, scheduler, and proxy find the apiserver
+KUBE_MASTER="--master=https://{{api_server}}:6443"

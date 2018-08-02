@@ -14,3 +14,4 @@
 
 ### 优化跟进 k8s 1.11 release
 
+### 去掉 k8s-node 的config

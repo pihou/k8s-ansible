@@ -10,10 +10,6 @@ KUBELET_ADDRESS="--address={{ansible_default_ipv4.address}}"
 ## You may leave this blank to use the actual hostname
 KUBELET_HOSTNAME="--hostname-override={{ansible_default_ipv4.address}}"
 #
-## location of the api-server
-## COMMENT THIS ON KUBERNETES 1.8+
-#KUBELET_API_SERVER="--api-servers=http://{{api_server}}:8080"
-#
 ## pod infrastructure container
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry-vpc.cn-shenzhen.aliyuncs.com/pause-amd64:3.0"
 #
@@ -21,7 +17,7 @@ KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry-vpc.cn-shenzhe
 KUBELET_ARGS="--read-only-port=0 \
 --anonymous-auth=false \
 --authentication-token-webhook \
---authentication-mode=Webhook \
+--authorization-mode=Webhook \
 --client-ca-file=/etc/kubernetes/ssl/ca.pem \
 --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
 --cluster-dns=10.254.0.2 \
@@ -33,4 +29,7 @@ KUBELET_ARGS="--read-only-port=0 \
 --cgroup-driver=systemd \
 --runtime-cgroups=/systemd/system.slice \
 --kubelet-cgroups=/systemd/system.slice"
+
+# How the controller-manager, scheduler, and proxy find the apiserver
+KUBE_MASTER="--master=https://{{api_server}}:6443"
 

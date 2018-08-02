@@ -3,8 +3,12 @@
 
 # defaults from config and apiserver should be adequate
 
+# How the controller-manager, scheduler, and proxy find the apiserver
+KUBE_MASTER="--master=http://127.0.0.1:8080"
+
 # Add your own!
-KUBE_CONTROLLER_MANAGER_ARGS="--address=127.0.0.1 \
+KUBE_CONTROLLER_MANAGER_ARGS="--bind-address=127.0.0.1 \
+--port=10252 \
 --service-cluster-ip-range=10.254.0.0/16 \
 --cluster-name=kubernetes \
 --cluster-signing-cert-file=/etc/kubernetes/ssl/ca.pem \

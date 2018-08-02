@@ -8,10 +8,8 @@
 ### 配置参考
 [k8s](https://jimmysong.io/kubernetes-handbook/)
 
-### flanneld 的 网络类型问题
-
-### k8s-插件解决
-
-### 优化跟进 k8s 1.11 release
-
-### 去掉 k8s-node 的config
+### Todo
+1. flanneld 的 网络类型问题 vxlan -> hostgw
+2. k8s 插件 dns,dashboard,heapster,elk 自动安装
+3. 优化跟进 k8s 1.11 release
+4. 统一master node的config文件

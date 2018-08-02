@@ -13,3 +13,4 @@
 2. k8s 插件 dns,dashboard,heapster,elk 自动安装
 3. 优化跟进 k8s 1.11 release
 4. 统一master node的config文件
+5. docker 1.13.1 flanneld 0.7.1 防火墙 filter table FORWARD 预设规则需要修改为ACCEPT

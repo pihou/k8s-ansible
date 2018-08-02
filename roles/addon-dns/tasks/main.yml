@@ -1,0 +1,16 @@
+
+- name: create addon directory
+  file: path="{{item}}" state=directory
+  with_items:
+  - /root/addon/dns
+
+- name: copy config file
+  copy: 
+    src: "{{item}}"
+    dest: "/root/addon/dns"
+  with_fileglob:
+    "*.yaml"
+
+- name: apply dns resource
+  shell: kubectl apply -f /root/addon/dns
+

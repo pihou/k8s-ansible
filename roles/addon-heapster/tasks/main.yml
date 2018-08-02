@@ -2,15 +2,15 @@
 - name: create addon directory
   file: path="{{item}}" state=directory
   with_items:
-  - /root/addon/dashboard
+  - /root/addon/heapster
 
 - name: copy config file
   copy: 
     src: "{{item}}"
-    dest: "/root/addon/dashboard"
+    dest: "/root/addon/heapster"
   with_fileglob:
     "*.yaml"
 
-- name: apply dashboard resource
-  shell: kubectl apply -f /root/addon/dashboard
+- name: apply heapster resource
+  shell: kubectl apply -f /root/addon/heapster
 

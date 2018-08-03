@@ -8,6 +8,7 @@
 
 ### 配置参考
 [k8s](https://jimmysong.io/kubernetes-handbook/)
+[ansible cheat sheet](https://gist.github.com/andreicristianpetcu/b892338de279af9dac067891579cad7d)
 
 ### Todo
 1. flanneld 的 网络类型问题 vxlan -> hostgw
@@ -16,3 +17,4 @@
 ### 成功安装的软件版本信息
 1. docker 1.13.1
 2. flanneld 0.7.1
+3. kubernetes 1.11

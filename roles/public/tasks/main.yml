@@ -26,14 +26,6 @@
     - { src: "/root/software/kubernetes-server-linux-amd64.tar.gz", dest: "/root/software/"}
   when: inventory_hostname != groups["main"][0]
 
-#- name: get k8s server bin
-#  get_url: 
-#    url: "{{item.url}}"
-#    dest: "{{item.dest}}" 
-#  with_items:
-#    - {url: 'http://kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
-#  when: inventory_hostname != groups["main"][0]
-
 - name: put k8s server bin
   shell: |
     cd /root/software

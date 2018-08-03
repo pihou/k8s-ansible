@@ -23,7 +23,7 @@ ExecStart=/usr/bin/etcd \
           --advertise-client-urls ${ETCD_ADVERTISE_CLIENT_URLS} \
           --initial-cluster-token ${ETCD_INITIAL_CLUSTER_TOKEN} \
           --initial-cluster {% for host in groups['etcd-node'] -%}
-    infra{{hostvars[host].ansible_facts.ansible_default_ipv4.address|replace(".","_")}}=https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2380
+    infra{{hostvars[host].ansible_facts.default_ipv4.address|replace(".","_")}}=https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2380
     {%- if not loop.last %},{% endif -%}
 {%- endfor %} \
           --initial-cluster-state new \

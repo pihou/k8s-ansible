@@ -2,6 +2,7 @@
 - name: local
   hosts: 127.0.0.1
   connection: local
+  gather_facts: no
   tasks:
   - shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/k8s_rsa -q -N ""
     args:

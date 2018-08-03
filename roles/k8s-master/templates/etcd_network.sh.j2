@@ -1,5 +1,5 @@
 etcdctl --endpoints={%- for host in groups['etcd-node'] -%}
-https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2379
+https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2379
 {%- if not loop.last %},{% endif -%}
 {%- endfor -%}\
   --ca-file=/etc/kubernetes/ssl/ca.pem \
@@ -7,7 +7,7 @@ https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2379
   --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
   mkdir /kube-centos/network
 etcdctl --endpoints={%- for host in groups['etcd-node'] -%}
-https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2379
+https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2379
 {%- if not loop.last %},{% endif -%}
 {%- endfor -%}\
   --ca-file=/etc/kubernetes/ssl/ca.pem \

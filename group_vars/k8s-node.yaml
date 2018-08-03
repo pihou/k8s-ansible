@@ -1,0 +1,2 @@
+# pod-infra-container-image 
+pod_infra_container_image: 'registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/pause-amd64:3.0'

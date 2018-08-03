@@ -4,9 +4,9 @@
     dest: "{{item.dest}}" 
     mode: "u+x"
   with_items:
-    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssl_linux-amd64', dest: '/usr/local/bin/cfssl'}
-    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssljson_linux-amd64', dest: '/usr/local/bin/cfssljson'}
-    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssl-certinfo_linux-amd64', dest: '/usr/local/bin/cfssl-certinfo'}
+    - {url: '{{cfssl}}', dest: '/usr/local/bin/cfssl'}
+    - {url: '{{cfssljson}}', dest: '/usr/local/bin/cfssljson'}
+    - {url: '{{cfssl_certinfo}}', dest: '/usr/local/bin/cfssl-certinfo'}
 
 - name: creates common directory
   file: path="{{item}}" state=directory
@@ -57,8 +57,8 @@
     url: "{{item.url}}"
     dest: "{{item.dest}}" 
   with_items:
-    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-client-linux-amd64.tar.gz', dest: '/root/software/'}
-    - {url: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz', dest: '/root/software/'}
+    - {url: '{{kubernetes_client}}', dest: '/root/software/'}
+    - {url: '{{kubernetes_server}}', dest: '/root/software/'}
 
 - name: create kubectl kubelet kube-proxy kubeconfig
   shell: |

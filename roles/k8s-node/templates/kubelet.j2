@@ -11,7 +11,7 @@ KUBELET_ADDRESS="--address={{ansible_default_ipv4.address}}"
 KUBELET_HOSTNAME="--hostname-override={{ansible_default_ipv4.address}}"
 #
 ## pod infrastructure container
-KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/pause-amd64:3.0"
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=pod_infra_container_image"
 #
 ## Add your own!
 KUBELET_ARGS="--read-only-port=0 \
@@ -31,5 +31,5 @@ KUBELET_ARGS="--read-only-port=0 \
 --kubelet-cgroups=/systemd/system.slice"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master=https://{{hostvars[groups['k8s-master'].0].ansible_facts.ansible_default_ipv4.address}}:6443"
+KUBE_MASTER="--master=https://{{hostvars[groups['k8s-master'].0].ansible_facts.default_ipv4.address}}:6443"
 

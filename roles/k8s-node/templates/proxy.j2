@@ -10,4 +10,4 @@ KUBE_PROXY_ARGS="--bind-address={{ansible_default_ipv4.address}} \
 --cluster-cidr=10.254.0.0/16"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master=https://{{hostvars[groups['k8s-master'].0].ansible_facts.ansible_default_ipv4.address}}:6443"
+KUBE_MASTER="--master=https://{{hostvars[groups['k8s-master'].0].ansible_facts.default_ipv4.address}}:6443"

@@ -1,0 +1,8 @@
+# cfssl 
+cfssl: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssl_linux-amd64'
+cfssljson: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssljson_linux-amd64'
+cfssl_certinfo: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssl-certinfo_linux-amd64'
+
+# kubernetes
+kubernetes_client: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-client-linux-amd64.tar.gz'
+kubernetes_server: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz'

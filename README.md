@@ -8,8 +8,8 @@
 6. 为方便测试dashboard 插件，默认开启了全部权限，如生产部署请作出相应修改
 
 ### 配置参考
-[k8s](https://jimmysong.io/kubernetes-handbook/)
-[ansible cheat sheet](https://gist.github.com/andreicristianpetcu/b892338de279af9dac067891579cad7d)
+1. [k8s](https://jimmysong.io/kubernetes-handbook/)
+2. [ansible cheat sheet](https://gist.github.com/andreicristianpetcu/b892338de279af9dac067891579cad7d)
 
 ### Todo
 1. flanneld 的 网络类型问题 vxlan -> hostgw

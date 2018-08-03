@@ -36,7 +36,7 @@ spec:
       serviceAccountName: heapster
       containers:
       - name: heapster
-        image: registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/heapster-amd64:v1.4.2
+        image: {{registry}}/heapster-amd64:v1.4.2
         imagePullPolicy: IfNotPresent
         command:
         - /heapster

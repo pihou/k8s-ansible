@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/heapster-influxdb-amd64:v1.3.3
+        image: {{registry}}/heapster-influxdb-amd64:v1.3.3
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage

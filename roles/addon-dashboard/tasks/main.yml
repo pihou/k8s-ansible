@@ -11,6 +11,11 @@
   with_fileglob:
     "*.yaml"
 
+- name: generate config by template
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {src: "dashboard-controller.yaml.j2", dest: "/root/addon/dashboard/dashboard-controller.yaml"}
+
 - name: apply dashboard resource
   shell: kubectl apply -f /root/addon/dashboard
 

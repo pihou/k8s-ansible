@@ -30,7 +30,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
       - name: kubernetes-dashboard
-        image: registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/kubernetes-dashboard-amd64:v1.8.3
+        image: {{registry}}/kubernetes-dashboard-amd64:v1.8.3
         resources:
           limits:
             cpu: 100m

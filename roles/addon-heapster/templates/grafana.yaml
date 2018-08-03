@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s/heapster-grafana-amd64:v4.4.3
+        image: {{registry}}/heapster-grafana-amd64:v4.4.3
         ports:
         - containerPort: 3000
           protocol: TCP

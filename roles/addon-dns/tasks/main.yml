@@ -11,6 +11,11 @@
   with_fileglob:
     "*.yaml"
 
+- name: generate config by template
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {src: "kubedns-controller.yaml.j2", dest: "/root/addon/dns/kubedns-controller.yaml"}
+
 - name: apply dns resource
   shell: kubectl apply -f /root/addon/dns
 

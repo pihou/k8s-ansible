@@ -6,3 +6,6 @@ cfssl_certinfo: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/cfssl-certi
 # kubernetes
 kubernetes_client: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-client-linux-amd64.tar.gz'
 kubernetes_server: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernetes-server-linux-amd64.tar.gz'
+
+# registry
+registry: "registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s"

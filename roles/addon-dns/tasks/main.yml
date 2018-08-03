@@ -1,4 +1,7 @@
 
+- name: approve kubelet csr
+  shell: for i in $(kubectl get csr | grep Pending | awk '{ print $1 }' ) ; do kubectl certificate approve $i; done
+
 - name: create addon directory
   file: path="{{item}}" state=directory
   with_items:

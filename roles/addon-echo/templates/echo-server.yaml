@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: echo-server
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: echo-server
+  template:
+    metadata:
+      labels:
+        app: echo-server
+    spec:
+      containers:
+      - name: echo-server
+        image: {{registry}}/echo-server:0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-server
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    targetPort: 8082
+    nodePort: 30080
+  selector:
+    app: echo-server
+  type: NodePort

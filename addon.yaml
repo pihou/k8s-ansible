@@ -17,3 +17,8 @@
   roles:
     - addon-heapster
 
+- name: main node
+  hosts: main
+  remote_user: root
+  roles:
+    - addon-echo

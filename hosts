@@ -1,32 +1,21 @@
 [main]
-k8s-main
+k8s-node1.shoupihou.site
 
 [k8s-master]
-k8s-master1
-
-[k8s-master:vars]
-api_server=192.168.0.12
-etcd_ips=["192.168.0.12","192.168.0.13","192.168.0.14"]
+k8s-node1.shoupihou.site
 
 [k8s-node]
-k8s-node1
-k8s-node2
-k8s-node3
-
-[k8s-node:vars]
-api_server=192.168.0.12
-etcd_ips=["192.168.0.12","192.168.0.13","192.168.0.14"]
+k8s-node1.shoupihou.site
+k8s-node2.shoupihou.site
+k8s-node3.shoupihou.site
 
 [etcd-node]
-k8s-node1
-k8s-node2
-k8s-node3
-
-[etcd-node:vars]
-private_ips=["192.168.0.12","192.168.0.13","192.168.0.14"]
+k8s-node1.shoupihou.site
+k8s-node2.shoupihou.site
+k8s-node3.shoupihou.site
 
 [all]
-k8s-node1
-k8s-node2
-k8s-node3
+k8s-node1.shoupihou.site
+k8s-node2.shoupihou.site
+k8s-node3.shoupihou.site
 

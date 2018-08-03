@@ -14,8 +14,9 @@ KUBE_API_ADDRESS="--advertise-address={{ansible_default_ipv4.address}} --bind-ad
 #KUBELET_PORT="--kubelet-port=10250"
 #
 ## Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd-servers={% for ip in etcd_ips -%}
-    https://{{ip}}:2379
+
+KUBE_ETCD_SERVERS="--etcd-servers={% for host in groups['etcd-node'] -%}
+    https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2379
     {%- if not loop.last %},{% endif -%}
 {%- endfor %}"
 #

@@ -31,5 +31,5 @@ KUBELET_ARGS="--read-only-port=0 \
 --kubelet-cgroups=/systemd/system.slice"
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master=https://{{api_server}}:6443"
+KUBE_MASTER="--master=https://{{hostvars[groups['k8s-master'].0].ansible_facts.ansible_default_ipv4.address}}:6443"
 

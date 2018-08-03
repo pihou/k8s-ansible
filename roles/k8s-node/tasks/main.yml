@@ -59,3 +59,10 @@
     name: "{{item}}"
   with_items: ["docker",]
 
+# docker 1.13.1 set forward chain default policy drop
+# so we need change it
+- name: iptables filter forward accept
+  iptables:
+    chain: FORWARD
+    policy: ACCEPT
+

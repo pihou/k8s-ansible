@@ -1,8 +1,8 @@
 # Flanneld configuration options  
 
 # etcd url location.  Point this to the server where etcd runs
-FLANNEL_ETCD_ENDPOINTS="{%- for ip in etcd_ips -%}
-https://{{ip}}:2379
+FLANNEL_ETCD_ENDPOINTS="{%- for host in groups['etcd-node'] -%}
+https://{{hostvars[host].ansible_facts.ansible_default_ipv4.address}}:2379
 {%- if not loop.last %},{% endif -%}
 {%- endfor %}"
 
@@ -16,3 +16,4 @@ FLANNEL_OPTIONS="-etcd-cafile=/etc/kubernetes/ssl/ca.pem \
 -etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem \
 -iface={{ansible_default_ipv4.interface}} \
 -ip-masq=true"
+

@@ -17,7 +17,7 @@ spec:
         image: {{registry}}/echo-server:0.1
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           protocol: TCP
 ---
 apiVersion: v1
@@ -28,7 +28,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 8082
+    targetPort: 8080
     nodePort: 30080
   selector:
     app: echo-server

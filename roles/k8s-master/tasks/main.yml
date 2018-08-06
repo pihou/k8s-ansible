@@ -30,8 +30,10 @@
     kubectl create clusterrolebinding kubelet-bootstrap \
         --clusterrole=system:node-bootstrapper \
         --user=kubelet-bootstrap
+  ignore_errors: yes
 
 - name: create etcd network data
   command: sh /root/etcd_network.sh
   when: inventory_hostname == groups["main"][0]
+  ignore_errors: yes
 

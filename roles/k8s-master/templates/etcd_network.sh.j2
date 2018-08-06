@@ -1,17 +1,12 @@
-etcdctl --endpoints={%- for host in groups['etcd-node'] -%}
+export ETCDCTL_ENDPOINTS={%- for host in groups['etcd-node'] -%}
 https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2379
 {%- if not loop.last %},{% endif -%}
-{%- endfor -%}\
-  --ca-file=/etc/kubernetes/ssl/ca.pem \
-  --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
-  --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  mkdir /kube-centos/network
-etcdctl --endpoints={%- for host in groups['etcd-node'] -%}
-https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2379
-{%- if not loop.last %},{% endif -%}
-{%- endfor -%}\
-  --ca-file=/etc/kubernetes/ssl/ca.pem \
-  --cert-file=/etc/kubernetes/ssl/kubernetes.pem \
-  --key-file=/etc/kubernetes/ssl/kubernetes-key.pem \
-  mk /kube-centos/network/config '{"Network":"172.30.0.0/16","SubnetLen":24,"Backend":{"Type":"vxlan"}}'
+{%- endfor -%}
+exprot ETCDCTL_CA_FILE=/etc/kubernetes/ssl/ca.pem
+export ETCDCTL_CERT_FILE=/etc/kubernetes/ssl/kubernetes.pem
+export ETCDCTL_KEY_FILE=/etc/kubernetes/ssl/kubernetes-key.pem
+
+etcdctl mkdir /kube-centos/network
+etcdctl set /kube-centos/network/config '{"Network":"172.30.0.0/16","SubnetLen":24,"Backend":{"Type":"vxlan"}}'
+etcdctl rm $(etcdctl ls /kube-centos/network/subnets)
 

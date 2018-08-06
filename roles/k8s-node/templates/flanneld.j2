@@ -14,6 +14,5 @@ FLANNEL_ETCD_PREFIX="/kube-centos/network"
 FLANNEL_OPTIONS="-etcd-cafile=/etc/kubernetes/ssl/ca.pem \
 -etcd-certfile=/etc/kubernetes/ssl/kubernetes.pem \
 -etcd-keyfile=/etc/kubernetes/ssl/kubernetes-key.pem \
--iface={{ansible_default_ipv4.interface}} \
--ip-masq=true"
+-iface={{ansible_default_ipv4.interface}} -ip-masq=true"
 

@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: api
+        image: {{registry_benchmark}}/api:0.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: api
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 128m
+  name: benchmark
+spec:
+  rules:
+  - host: k8s-node1.longban.site
+    http:
+      paths:
+      - backend:
+          serviceName: api
+          servicePort: 80
+#  tls:
+#  - hosts:
+#    - drone.longban.site
+#    secretName: drone
+
+

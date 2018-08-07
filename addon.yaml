@@ -22,3 +22,15 @@
   remote_user: root
   roles:
     - addon-echo
+
+- name: main node
+  hosts: main
+  remote_user: root
+  roles:
+    - addon-ingress
+
+- name: main node
+  hosts: main
+  remote_user: root
+  roles:
+    - addon-benchmark

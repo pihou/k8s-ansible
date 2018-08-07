@@ -9,3 +9,6 @@ kubernetes_server: 'https://pihou.oss-cn-shenzhen-internal.aliyuncs.com/kubernet
 
 # registry
 registry: "registry-vpc.cn-shenzhen.aliyuncs.com/pihou-k8s"
+
+# need optimize
+registry_benchmark: "registry-vpc.cn-shenzhen.aliyuncs.com/pihou-api"

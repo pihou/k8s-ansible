@@ -1,12 +1,12 @@
 ---
 
-apiVersion: apps/v1
+apiVersion: v1
 kind: Namespace
 metadata:
   name: ingress-nginx
 ---
 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: default-http-backend
@@ -29,7 +29,7 @@ spec:
         # Any image is permissible as long as:
         # 1. It serves a 404 page at /
         # 2. It serves 200 on a /healthz endpoint
-        image: {{registry}}/ingress_defaultbackend:1.4
+        image: {{registry}}/ingress-defaultbackend:1.4
         livenessProbe:
           httpGet:
             path: /healthz
@@ -227,7 +227,6 @@ metadata:
   name: nginx-ingress-controller
   namespace: ingress-nginx 
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: ingress-nginx

@@ -1,0 +1,14 @@
+
+- name: create addon directory
+  file: path="{{item}}" state=directory
+  with_items:
+  - /root/addon/ingress
+
+- name: generate config by template
+  template: src="{{item}}" dest="/root/addon/ingress"
+  with_fileglob:
+    "../templates/*.yaml"
+
+- name: apply resource
+  shell: kubectl apply -f /root/addon/ingress
+

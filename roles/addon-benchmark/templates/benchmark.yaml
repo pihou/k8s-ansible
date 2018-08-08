@@ -44,7 +44,7 @@ metadata:
   name: benchmark
 spec:
   rules:
-  - host: k8s-node1.longban.site
+  - host: k8s-node1.shoupihou.site
     http:
       paths:
       - backend:

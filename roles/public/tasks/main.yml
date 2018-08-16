@@ -13,6 +13,12 @@
   - /etc/kubernetes
   - /etc/kubernetes/ssl
 
+- name: add local ssh public key
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', '~/.ssh/k8s_rsa.pub') }}"
+
 - name: get certificate
   synchronize: 
     src: "{{item}}"
@@ -22,12 +28,6 @@
     - /etc/kubernetes/ssl/ca.pem
     - /etc/kubernetes/ssl/kubernetes-key.pem
     - /etc/kubernetes/ssl/kubernetes.pem
-
-- name: add local ssh public key
-  authorized_key:
-    user: root
-    state: present
-    key: "{{ lookup('file', '~/.ssh/k8s_rsa.pub') }}"
 
 - name: get k8s server bin
   synchronize: src="{{item.src}}" dest="{{item.dest}}"

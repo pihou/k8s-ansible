@@ -13,6 +13,16 @@
   - /etc/kubernetes
   - /etc/kubernetes/ssl
 
+- name: get certificate
+  synchronize: 
+    src: "{{item}}"
+    dest: /etc/kubernetes/ssl/
+  delegate_to: "{{groups['main'][0]}}"
+  with_items:
+    - /etc/kubernetes/ssl/ca.pem
+    - /etc/kubernetes/ssl/kubernetes-key.pem
+    - /etc/kubernetes/ssl/kubernetes.pem
+
 - name: add local ssh public key
   authorized_key:
     user: root

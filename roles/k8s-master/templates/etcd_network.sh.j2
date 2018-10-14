@@ -2,7 +2,7 @@ export ETCDCTL_ENDPOINTS={%- for host in groups['etcd-node'] -%}
 https://{{hostvars[host].ansible_facts.default_ipv4.address}}:2379
 {%- if not loop.last %},{% endif -%}
 {%- endfor -%}
-exprot ETCDCTL_CA_FILE=/etc/kubernetes/ssl/ca.pem
+export ETCDCTL_CA_FILE=/etc/kubernetes/ssl/ca.pem
 export ETCDCTL_CERT_FILE=/etc/kubernetes/ssl/kubernetes.pem
 export ETCDCTL_KEY_FILE=/etc/kubernetes/ssl/kubernetes-key.pem
 
